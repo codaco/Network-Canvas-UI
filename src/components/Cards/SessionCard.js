@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { ProgressBar } from '..';
-import HoverMarquee from '../HoverMarquee';
+// import HoverMarquee from '../HoverMarquee';
 import StartedIcon from '../../assets/images/StartedIcon.svg';
 import ModifiedIcon from '../../assets/images/ModifiedIcon.svg';
 import FinishedIcon from '../../assets/images/FinishedIcon.svg';
@@ -10,6 +10,8 @@ import ExportedIcon from '../../assets/images/ExportedIcon.svg';
 import Skeleton from '../Skeleton';
 
 const formatDate = (dateString) => dateString && new Date(dateString).toLocaleString(undefined);
+
+const HoverMarquee = (props) => (<div>{props.children}</div>);
 
 const SessionCard = (props) => {
   const {
@@ -21,18 +23,18 @@ const SessionCard = (props) => {
     protocolName,
     progress,
     selected,
-    onClickHandler,
+    onClick,
     loading,
   } = props;
 
   const modifierClasses = cx(
     'session-card',
-    { 'session-card--clickable': onClickHandler },
+    { 'session-card--clickable': onClick },
     { 'session-card--selected': selected },
   );
 
   return (
-    <div className={modifierClasses} onClick={onClickHandler}>
+    <div className={modifierClasses} onClick={onClick}>
       <div className="main-wrapper">
         <h2 className="card__label">
           { loading ? <Skeleton width="60%" /> : <HoverMarquee>{ caseId }</HoverMarquee>}
@@ -97,7 +99,7 @@ const SessionCard = (props) => {
 };
 
 SessionCard.defaultProps = {
-  onClickHandler: undefined,
+  onClick: undefined,
   protocolName: null,
   selected: false,
   finishedAt: null,
@@ -114,7 +116,7 @@ SessionCard.propTypes = {
   protocolName: PropTypes.string,
   progress: PropTypes.number.isRequired,
   selected: PropTypes.bool,
-  onClickHandler: PropTypes.func,
+  onClick: PropTypes.func,
   loading: PropTypes.bool,
 };
 
